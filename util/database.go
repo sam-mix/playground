@@ -26,7 +26,7 @@ func Conn() *gorm.DB {
 
 	zapLogger := myzap.Logger{
 		ZapLogger:                 myzap.NewLogger().Logger,
-		LogLevel:                  logger.Warn,
+		LogLevel:                  logger.Error,
 		SlowThreshold:             100 * time.Millisecond,
 		SkipCallerLookup:          false,
 		IgnoreRecordNotFoundError: true,
