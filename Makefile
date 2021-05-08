@@ -11,7 +11,15 @@ reboot:
 	@docker compose down
 	@docker compose up -d
 
+.PHONY:one
+one:
+	@cd demos/one && go run main.go
+
+.PHONY:two
+two:
+	@cd demos/two && go run main.go
+
 .PHONY:run
 run:
-	@cd demos/one && go run main.go
+	@cd demos/run && go run main.go
 
