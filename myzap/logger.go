@@ -37,10 +37,11 @@ func (l *Logger) SetAsDefault() {
 
 func (l Logger) LogMode(level gormlogger.LogLevel) gormlogger.Interface {
 	return &Logger{
-		ZapLogger:        l.ZapLogger,
-		SlowThreshold:    l.SlowThreshold,
-		LogLevel:         level,
-		SkipCallerLookup: l.SkipCallerLookup,
+		ZapLogger:                 l.ZapLogger,
+		SlowThreshold:             l.SlowThreshold,
+		LogLevel:                  level,
+		SkipCallerLookup:          l.SkipCallerLookup,
+		IgnoreRecordNotFoundError: l.IgnoreRecordNotFoundError,
 	}
 }
 

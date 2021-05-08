@@ -40,7 +40,7 @@ func NewLoggerWithEncoder(timeEncoder zapcore.TimeEncoder, callerEncoder zapcore
 		Logger: zap.New(
 			zapcore.NewCore(encoder, ws, zap.NewAtomicLevelAt(level)),
 			zap.AddCaller(),
-			zap.AddCallerSkip(1),
+			zap.AddCallerSkip(2),
 		),
 	}
 }

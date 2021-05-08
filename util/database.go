@@ -49,6 +49,8 @@ func Conn() *gorm.DB {
 		panic(err)
 	}
 	db = db.Debug()
+	fmt.Printf("asdfasdf")
+
 	db.Callback().Query().Before("gorm:query").Register("gorm:auto_migrate", migrate)
 	db.Callback().Update().Before("gorm:update").Register("gorm:auto_migrate", migrate)
 	db.Callback().Create().Before("gorm:create").Register("gorm:auto_migrate", migrate)
