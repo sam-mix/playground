@@ -18,7 +18,7 @@ func NewLogger() *ZapLogger {
 }
 
 func NewLoggerWithEncoder(timeEncoder zapcore.TimeEncoder, callerEncoder zapcore.CallerEncoder) *ZapLogger {
-	level := zap.ErrorLevel
+	level := zap.InfoLevel
 	var syncers []zapcore.WriteSyncer
 	logger := &lumberjack.Logger{
 		Filename:   "/tmp/playground/log.log",
@@ -40,7 +40,7 @@ func NewLoggerWithEncoder(timeEncoder zapcore.TimeEncoder, callerEncoder zapcore
 		Logger: zap.New(
 			zapcore.NewCore(encoder, ws, zap.NewAtomicLevelAt(level)),
 			zap.AddCaller(),
-			zap.AddCallerSkip(2),
+			zap.AddCallerSkip(1),
 		),
 	}
 }

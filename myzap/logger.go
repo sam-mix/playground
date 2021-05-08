@@ -31,12 +31,12 @@ func New(zapLogger *zap.Logger) Logger {
 	}
 }
 
-func (l Logger) SetAsDefault() {
+func (l *Logger) SetAsDefault() {
 	gormlogger.Default = l
 }
 
 func (l Logger) LogMode(level gormlogger.LogLevel) gormlogger.Interface {
-	return Logger{
+	return &Logger{
 		ZapLogger:        l.ZapLogger,
 		SlowThreshold:    l.SlowThreshold,
 		LogLevel:         level,
@@ -44,34 +44,36 @@ func (l Logger) LogMode(level gormlogger.LogLevel) gormlogger.Interface {
 	}
 }
 
-func (l Logger) Info(ctx context.Context, str string, args ...interface{}) {
+func (l *Logger) Info(ctx context.Context, str string, args ...interface{}) {
 	if l.LogLevel < gormlogger.Info {
 		return
 	}
 	l.logger().Sugar().Debugf(str, args...)
 }
 
-func (l Logger) Warn(ctx context.Context, str string, args ...interface{}) {
+func (l *Logger) Warn(ctx context.Context, str string, args ...interface{}) {
 	if l.LogLevel < gormlogger.Warn {
 		return
 	}
 	l.logger().Sugar().Warnf(str, args...)
 }
 
-func (l Logger) Error(ctx context.Context, str string, args ...interface{}) {
+func (l *Logger) Error(ctx context.Context, str string, args ...interface{}) {
 	if l.LogLevel < gormlogger.Error {
 		return
 	}
 	l.logger().Sugar().Errorf(str, args...)
 }
 
-func (l Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, int64), err error) {
+func (l *Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, int64), err error) {
 	if l.LogLevel <= 0 {
 		return
 	}
 	elapsed := time.Since(begin)
+	l.logger().Info("lable:", zap.Bool("true?", l.LogLevel >= gormlogger.Error))
 	switch {
 	case err != nil && l.LogLevel >= gormlogger.Error && (!errors.Is(err, gorm.ErrRecordNotFound) || !l.IgnoreRecordNotFoundError):
+		l.logger().Warn("lable:", zap.Bool("true?", l.IgnoreRecordNotFoundError))
 		sql, rows := fc()
 		l.logger().Error("trace", zap.Error(err), zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 	case l.SlowThreshold != 0 && elapsed > l.SlowThreshold && l.LogLevel >= gormlogger.Warn:
@@ -88,7 +90,7 @@ var (
 	zapgormPackage = filepath.Join("moul.io", "zapgorm2")
 )
 
-func (l Logger) logger() *zap.Logger {
+func (l *Logger) logger() *zap.Logger {
 	for i := 2; i < 15; i++ {
 		_, file, _, ok := runtime.Caller(i)
 		switch {

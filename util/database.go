@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -24,7 +25,7 @@ func Conn() *gorm.DB {
 	// 	},
 	// )
 
-	zapLogger := myzap.Logger{
+	zapLogger := &myzap.Logger{
 		ZapLogger:                 myzap.NewLogger().Logger,
 		LogLevel:                  logger.Error,
 		SlowThreshold:             100 * time.Millisecond,
@@ -42,6 +43,8 @@ func Conn() *gorm.DB {
 	}), &gorm.Config{
 		Logger: zapLogger,
 	})
+
+	fmt.Println("xxx =>", zapLogger.IgnoreRecordNotFoundError)
 	if err != nil {
 		panic(err)
 	}
