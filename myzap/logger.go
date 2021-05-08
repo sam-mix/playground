@@ -71,10 +71,8 @@ func (l *Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, 
 		return
 	}
 	elapsed := time.Since(begin)
-	l.logger().Info("lable:", zap.Bool("true?", l.LogLevel >= gormlogger.Error))
 	switch {
 	case err != nil && l.LogLevel >= gormlogger.Error && (!errors.Is(err, gorm.ErrRecordNotFound) || !l.IgnoreRecordNotFoundError):
-		l.logger().Warn("lable:", zap.Bool("true?", l.IgnoreRecordNotFoundError))
 		sql, rows := fc()
 		l.logger().Error("trace", zap.Error(err), zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 	case l.SlowThreshold != 0 && elapsed > l.SlowThreshold && l.LogLevel >= gormlogger.Warn:
@@ -88,11 +86,11 @@ func (l *Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, 
 
 var (
 	gormPackage    = filepath.Join("gorm.io", "gorm")
-	zapgormPackage = filepath.Join("moul.io", "zapgorm2")
+	zapgormPackage = filepath.Join("playground", "myzap")
 )
 
 func (l *Logger) logger() *zap.Logger {
-	for i := 2; i < 15; i++ {
+	for i := 4; i < 15; i++ {
 		_, file, _, ok := runtime.Caller(i)
 		switch {
 		case !ok:
@@ -100,7 +98,7 @@ func (l *Logger) logger() *zap.Logger {
 		case strings.Contains(file, gormPackage):
 		case strings.Contains(file, zapgormPackage):
 		default:
-			return l.ZapLogger.WithOptions(zap.AddCallerSkip(i))
+			return l.ZapLogger.WithOptions(zap.AddCallerSkip(i - 3))
 		}
 	}
 	return l.ZapLogger

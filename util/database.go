@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -30,7 +29,7 @@ func Conn() *gorm.DB {
 		LogLevel:                  logger.Error,
 		SlowThreshold:             100 * time.Millisecond,
 		SkipCallerLookup:          false,
-		IgnoreRecordNotFoundError: true,
+		IgnoreRecordNotFoundError: false,
 	}
 
 	db, err := gorm.Open(mysql.New(mysql.Config{
@@ -44,12 +43,9 @@ func Conn() *gorm.DB {
 		Logger: zapLogger,
 	})
 
-	fmt.Println("xxx =>", zapLogger.IgnoreRecordNotFoundError)
 	if err != nil {
 		panic(err)
 	}
-	db = db.Debug()
-	fmt.Printf("asdfasdf")
 
 	db.Callback().Query().Before("gorm:query").Register("gorm:auto_migrate", migrate)
 	db.Callback().Update().Before("gorm:update").Register("gorm:auto_migrate", migrate)
