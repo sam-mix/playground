@@ -1,4 +1,4 @@
-package zap
+package myzap
 
 import (
 	"go.uber.org/zap/zapcore"
