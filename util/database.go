@@ -1,8 +1,13 @@
 package util
 
 import (
+	"time"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+
+	"playground/myzap"
 )
 
 func Conn() *gorm.DB {
@@ -19,15 +24,14 @@ func Conn() *gorm.DB {
 	// 	},
 	// )
 
-	// zapLogger := myzap.Logger{
-	// 	// ZapLogger:                 configLogger.Logger,
-	// 	LogLevel:                  logger.Warn,
-	// 	SlowThreshold:             100 * time.Millisecond,
-	// 	SkipCallerLookup:          false,
-	// 	IgnoreRecordNotFoundError: true,
-	// }
+	zapLogger := myzap.Logger{
+		ZapLogger:                 myzap.NewLogger().Logger,
+		LogLevel:                  logger.Warn,
+		SlowThreshold:             100 * time.Millisecond,
+		SkipCallerLookup:          false,
+		IgnoreRecordNotFoundError: true,
+	}
 
-	logger := myzap.Logger{}
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,
 		DefaultStringSize:         255,   // string 类型字段的默认长度
@@ -36,7 +40,7 @@ func Conn() *gorm.DB {
 		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false, // 根据当前 MySQL 版本自动配置
 	}), &gorm.Config{
-		// Logger: zapLogger,
+		Logger: zapLogger,
 	})
 	if err != nil {
 		panic(err)

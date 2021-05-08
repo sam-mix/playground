@@ -1,4 +1,4 @@
-package zapgorm2
+package myzap
 
 import (
 	"context"
