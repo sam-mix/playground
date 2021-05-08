@@ -29,7 +29,7 @@ func Conn() *gorm.DB {
 		LogLevel:                  logger.Error,
 		SlowThreshold:             100 * time.Millisecond,
 		SkipCallerLookup:          false,
-		IgnoreRecordNotFoundError: false,
+		IgnoreRecordNotFoundError: true,
 	}
 
 	db, err := gorm.Open(mysql.New(mysql.Config{

@@ -23,3 +23,8 @@ two:
 run:
 	@cd demos/run && go run main.go
 
+
+.PHONY:err
+err:
+	@cd demos/err && go run main.go
+

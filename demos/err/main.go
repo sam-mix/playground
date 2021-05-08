@@ -8,5 +8,6 @@ import (
 func main() {
 	db := util.Conn()
 
-	db.First(&model.Bee{}, "id = ?", 1000000001)
+	db.Save(&model.Bee{})
+	db.Save(&model.Bee{})
 }
