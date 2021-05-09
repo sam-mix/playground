@@ -28,3 +28,7 @@ run:
 err:
 	@cd demos/err && go run main.go
 
+
+.PHONY:info
+info:
+	@cd demos/info && go run main.go

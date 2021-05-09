@@ -14,19 +14,9 @@ func Conn() *gorm.DB {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	dsn := "root:1qaz@wsx@tcp(127.0.0.1:53306)/x?charset=utf8mb4&parseTime=True&loc=Local"
 
-	// zapLogger := logger.New(
-	// 	log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
-	// 	logger.Config{
-	// 		SlowThreshold:             time.Second, // Slow SQL threshold
-	// 		LogLevel:                  logger.Info, // Log level
-	// 		IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
-	// 		Colorful:                  true,        // Disable color
-	// 	},
-	// )
-
 	zapLogger := &myzap.Logger{
 		ZapLogger:                 myzap.NewLogger().Logger,
-		LogLevel:                  logger.Error,
+		LogLevel:                  logger.Info,
 		SlowThreshold:             100 * time.Millisecond,
 		SkipCallerLookup:          false,
 		IgnoreRecordNotFoundError: true,
