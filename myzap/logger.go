@@ -95,6 +95,7 @@ func (l *Logger) logger() *zap.Logger {
 		switch {
 		case !ok:
 		case strings.HasSuffix(file, "_test.go"):
+		case strings.HasSuffix(file, ".dao.go"):
 		case strings.Contains(file, gormPackage):
 		case strings.Contains(file, zapgormPackage):
 		default:

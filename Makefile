@@ -32,3 +32,9 @@ err:
 .PHONY:info
 info:
 	@cd demos/info && go run main.go
+
+.PHONY:dao-log
+dao-log:
+	@cd demos/dao && go run main.go
+
+
