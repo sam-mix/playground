@@ -1,15 +1,15 @@
 .PHONY:up
 up:
-	@docker compose up -d
+	@docker-compose up -d
 
 .PHONY:down
 down:
-	@docker compose down
+	@docker-compose down
 
 .PHONY:reboot
 reboot:
-	@docker compose down
-	@docker compose up -d
+	@docker-compose down
+	@docker-compose up -d
 
 .PHONY:one
 one:
