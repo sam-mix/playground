@@ -37,4 +37,8 @@ info:
 dao-log:
 	@cd demos/dao && go run main.go
 
+.PHONY:where-true
+where-true:
+	@cd demos/err1 && go run main.go
+
 
