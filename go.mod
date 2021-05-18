@@ -3,6 +3,7 @@ module playground
 go 1.16
 
 require (
+	github.com/google/gopacket v1.1.19
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.16.0

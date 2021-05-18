@@ -42,3 +42,8 @@ where-true:
 	@cd demos/err1 && go run main.go
 
 
+.PHONY:hacking
+hacking:
+	@cd playground/hacking && go run main.go
+
+
