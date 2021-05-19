@@ -70,16 +70,24 @@ func (l *Logger) Trace(ctx context.Context, begin time.Time, fc func() (string, 
 	if l.LogLevel <= 0 {
 		return
 	}
+	sql, rows := fc()
+	if strings.Contains(sql, "SELECT DATABASE()") {
+		return
+	}
+	if strings.HasPrefix(sql, "SELECT column_name, is_nullable, data_type, character_maximum_length, numeric_precision, numeric_scale FROM information_schema.columns") {
+		return
+	}
+	if strings.HasPrefix(sql, "SELECT count(*) FROM information_schema.tables") {
+		return
+	}
 	elapsed := time.Since(begin)
 	switch {
 	case err != nil && l.LogLevel >= gormlogger.Error && (!errors.Is(err, gorm.ErrRecordNotFound) || !l.IgnoreRecordNotFoundError):
-		sql, rows := fc()
+
 		l.logger().Error("trace", zap.Error(err), zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 	case l.SlowThreshold != 0 && elapsed > l.SlowThreshold && l.LogLevel >= gormlogger.Warn:
-		sql, rows := fc()
 		l.logger().Warn("trace", zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 	case l.LogLevel >= gormlogger.Info:
-		sql, rows := fc()
 		l.logger().Info("trace", zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 	}
 }

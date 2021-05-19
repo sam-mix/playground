@@ -46,4 +46,8 @@ where-true:
 hacking:
 	@cd playground/hacking && go run main.go
 
+.PHONY:new-insert
+new-insert:
+	@cd demos/new-insert && go run main.go
+
 
