@@ -52,7 +52,7 @@ new-insert:
 
 .PHONY:godebug
 godebug:
-	@cd playground/godebug && GODEBUG=gctrace=1 go build main.go
+	@cd playground/godebug && GODEBUG=gctrace=1 go run main.go
 
 
 
