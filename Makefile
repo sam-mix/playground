@@ -50,4 +50,10 @@ hacking:
 new-insert:
 	@cd demos/new-insert && go run main.go
 
+.PHONY:godebug
+godebug:
+	@cd playground/godebug && GODEBUG=gctrace=1 go build main.go
+
+
+
 
