@@ -54,6 +54,11 @@ new-insert:
 godebug:
 	@cd playground/godebug && GODEBUG=gctrace=1 go run main.go
 
+.PHONY:error-stack
+error-stack:
+	# @cd playground/error-stack/caller && GODEBUG=gctrace=1 go run main.go
+	@cd playground/error-stack/caller && go run main.go
+
 
 
 
