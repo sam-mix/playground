@@ -10,6 +10,7 @@ func main() {
 
 	s2 := s[0:]
 	s2 = append(s2, 6)
+	fmt.Printf("%v", &s2 == &s1)
 	s2[0] = 111
 
 	s3 := s[0:1:2]
