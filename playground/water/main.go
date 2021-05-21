@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // 结果需要弄出的6升水
 const (
@@ -47,13 +50,13 @@ func (c *cup) rCap() {
 func (fm *cup) swap(to *cup) {
 	if fm.water > to.cap {
 		fm.water = fm.water - to.cap
-		fm.rCap()
 		to.full()
 	} else {
-		fm.clean()
 		to.water = to.water + fm.water
-		to.rCap()
+		fm.clean()
 	}
+	fm.rCap()
+	to.rCap()
 }
 
 // 展示水量
@@ -97,15 +100,19 @@ func main() {
  * 现在有两个 5L 和 7L 装的杯子， 水随便用， 要求倒出 6L 水
  */
 func water(cs ...*cup) {
-	time.Sleep(500 * time.)
+	time.Sleep(500 * time.Millisecond)
+
 	// 初始
 	if len(cs) == 0 {
 		water(first(initCups()))
 	}
-
+	cs[0].showWater()
+	cs[1].showWater()
+	fmt.Println("-----------")
 	cs[0].swap(cs[1])
 	cs[0].showWater()
 	cs[1].showWater()
+	fmt.Println("+++++++++++")
 	if cs[0].water == rw || cs[1].water == rw {
 		fmt.Println("结束了:")
 		return
