@@ -21,7 +21,7 @@ func main() {
 	}
 
 	d1 := &model.Bee{}
-	if err := db.Table("t_dog_002").Where("1 = 1 AND id = 1").First(d1).Error; err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+	if err := db.Table("t_dog_002").Where("`1` = `1` AND id = 1").First(d1).Error; err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return
 	}
 	fmt.Println(d1)
