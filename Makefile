@@ -58,6 +58,8 @@ godebug:
 error-stack:
 	@cd playground/error-stack/caller && go run main.go
 
-
+.PHONY:sqlite
+sqlite:
+	@cd demos/sqlite && go run main.go
 
 
