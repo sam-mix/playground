@@ -46,6 +46,6 @@ func Conn() *gorm.DB {
 }
 
 func migrate(db *gorm.DB) {
-	db.AutoMigrate(db.Statement.Model)
+	NewDB(db).AutoMigrate(db.Statement.Model)
 	db.Model(nil)
 }
