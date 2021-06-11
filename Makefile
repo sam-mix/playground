@@ -63,3 +63,6 @@ sqlite:
 	@cd demos/sqlite && go run main.go
 
 
+.PHONY:stacktrace
+stacktrace:
+	@cd playground/stacktrace && go run main.go
