@@ -11,8 +11,7 @@ func main() {
 	go func() {
 		time.Sleep(time.Millisecond)
 		wg.Done()
-
+		wg.Add(1)
 	}()
 	wg.Wait()
-	wg.Add(1)
 }
